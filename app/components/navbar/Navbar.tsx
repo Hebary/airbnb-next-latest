@@ -1,6 +1,8 @@
+'use client';
+
 import { FC } from 'react'
-import { Container } from '../'
-import { Logo } from '.'
+import { Container } from '..'
+import { Logo, Search, UserMenu } from '.'
 
 
 const Navbar:FC = () => {
@@ -10,6 +12,8 @@ const Navbar:FC = () => {
             <Container>
                 <div className='flex flex-row items-center justify-between gap-3 md:gap-0'>
                     <Logo/>
+                    <Search/>
+                    <UserMenu/>
                 </div>
             </Container>
         </div>
