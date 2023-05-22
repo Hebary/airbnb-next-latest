@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import './styles/globals.css'
 import { Nunito } from 'next/font/google'
 import { Navbar } from './components/navbar'
-import { Modal } from './components/modals'
+import { RegisterModal } from './components/modals'
 
 const nunito = Nunito({ subsets: ['latin'] })
 
@@ -15,11 +15,7 @@ export default function RootLayout({ children }: {children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={nunito.className}>
-        <Modal 
-            isOpen
-            title={'Login'}
-       
-          />
+        <RegisterModal/>
         <Navbar />
         {children}
       </body>
