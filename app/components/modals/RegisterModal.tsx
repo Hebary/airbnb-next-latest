@@ -5,6 +5,7 @@ import axios from 'axios'
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
+import { signIn } from "next-auth/react";
 import { useRegisterModal } from '@/app/hooks';
 import { Modal } from './'
 import { Button, Heading } from '../';
@@ -28,7 +29,7 @@ const RegisterModal:FC = ({}) => {
   const onSubmit: SubmitHandler<FieldValues> = async ({name, email, password}) => {
     setIsLoading(true);
     try {
-      const { data } = await axios.post('/api/auth/register', { name, email, password });
+      const { data } = await axios.post('/api/auth/registry', { name, email, password });
       registerModal.onClose();
       console.log(data);
     } catch (error) {
@@ -83,13 +84,13 @@ const RegisterModal:FC = ({}) => {
         outline 
         label='Continue with Google'
         icon={FcGoogle}
-        onClick={() => {}} 
+        onClick={() => signIn('google') } 
       />
       <Button 
         outline 
         label='Continue with Github'
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn('github')}
       />
       <div 
         className='
