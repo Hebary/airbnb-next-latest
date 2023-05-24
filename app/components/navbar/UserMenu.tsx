@@ -12,8 +12,7 @@ interface Props {
     currentUser?: User | null
 }
 
-const UserMenu:FC<Props> =  ({currentUser}) => {
-    console.log(currentUser)
+const UserMenu:FC<Props> =  ({ currentUser }) => {
 
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
@@ -22,6 +21,17 @@ const UserMenu:FC<Props> =  ({currentUser}) => {
     const toggleMenu = useCallback(() => {
         setIsOpen( value => !value );
     },[])
+
+    const handleClick = (label:string) => {
+        if(label === 'Login'){
+            loginModal.onOpen();
+            toggleMenu()
+            return;
+        }
+
+        registerModal.onOpen();
+        toggleMenu()
+    }
 
      return (
         <div className='relative'>
@@ -34,7 +44,7 @@ const UserMenu:FC<Props> =  ({currentUser}) => {
                     onClick={ toggleMenu }>
                         <AiOutlineMenu/>
                         <div className='hidden md:block'>
-                            <Avatar/>
+                            <Avatar src={ currentUser?.image }/>
                         </div>
                 </div>
             </div>
@@ -75,11 +85,11 @@ const UserMenu:FC<Props> =  ({currentUser}) => {
                             <>
                                 <MenuItem 
                                     label={'Login'} 
-                                    onClick={ loginModal.onOpen }
+                                    onClick={ () => handleClick('Login') }
                                 />
                                 <MenuItem 
                                     label={'Sign Up'} 
-                                    onClick={ registerModal.onOpen }
+                                    onClick={ () => handleClick('SignUp') }
                                 />
                             </>
                         )

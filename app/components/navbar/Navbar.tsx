@@ -10,8 +10,8 @@ interface Props {
 }
 
 const Navbar:FC<Props> = ({ currentUser }) => {
-  console.log(currentUser)
-  return (
+
+    return (
     <div className='fixed w-full shadow-sm bg-white z-10'>
         <div className='py-4 border-b-[1px]'>
             <Container>
