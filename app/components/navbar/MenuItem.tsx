@@ -11,7 +11,7 @@ const MenuItem:FC<Props> = ({ label, onClick }) => {
   return (
     <div
         onClick={onClick}
-        className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'>
+        className='px-4 py-3 hover:bg-rose-500 hover:text-white transition-colors duration-200 font-semibold'>
         {label}
     </div>
   )

@@ -1,15 +1,17 @@
 'use client';
 
 import { FC, useCallback, useState } from 'react'
-import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { signIn } from "next-auth/react";
+import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
-import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
-import { signIn } from "next-auth/react";
-import { useLoginModal } from '@/app/hooks';
-import { Modal } from '.'
+import { toast } from 'react-hot-toast';
+
 import { Button, Heading } from '..';
 import { Input } from '../inputs';
+import { Modal } from '.'
+import { useLoginModal } from '@/app/hooks';
 
 interface Props {}
 
@@ -17,25 +19,33 @@ const LoginModal:FC = ({}) => {
 
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
+  const router = useRouter();
+
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FieldValues>({
     defaultValues: {
       email: '',
       password: '',
     }
   });
 
+  const onSubmit: SubmitHandler<FieldValues> = ({ email, password}) => {
+    signIn('credentials', { email, password, redirect: false})
+      .then((callback) => {
+        setIsLoading(false);
+        
+        if(callback?.error) {
+          return toast.error(callback.error)
+        }
 
-  const onSubmit: SubmitHandler<FieldValues> = async ({ email, password}) => {
-    setIsLoading(true);
-    try {
-      const { data } = await axios.post('/api/auth/login', {  email, password });
-      loginModal.onClose();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+        if(callback?.ok) {
+          toast.success('Welcome back!')
+          router.refresh();
+          reset();
+          loginModal.onClose();
+        }
+
+      }
+    )
   }
 
   const onToggle = useCallback(() => {
@@ -46,8 +56,8 @@ const LoginModal:FC = ({}) => {
   const bodyContent = (
     <div className='flex flex-col gap-4'>
       <Heading
-        title='Welcome to Airbnb'
-        subtitle='Sign In!'
+        title='Welcome back'
+        subtitle='Login to to your account!'
       />
       <Input
         id='email'
@@ -77,7 +87,7 @@ const LoginModal:FC = ({}) => {
         outline 
         label='Continue with Google'
         icon={FcGoogle}
-        onClick={() => signIn('google') } 
+        onClick={() => signIn('google')} 
       />
       <Button 
         outline 

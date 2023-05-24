@@ -14,7 +14,7 @@ model User {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
   name            String?
   email           String?   @unique
-  emailVerified   DateTime?
+  emailVerified   DateTime? @map("email_verified")
   image           String?
   hashedPassword  String?
   createdAt       DateTime @default(now())
@@ -31,7 +31,7 @@ model Account {
   userId             String   @db.ObjectId
   type               String
   provider           String
-  providerAccountId  String
+  providerAccountId  String   @map("provider_account_id")
   refresh_token      String?  @db.String
   access_token       String?  @db.String
   expires_at         Int?
@@ -39,10 +39,11 @@ model Account {
   scope              String?
   id_token           String?  @db.String
   session_state      String?
-
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@map("accounts")
+
 }
 
 model Listing {

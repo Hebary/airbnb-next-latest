@@ -6,32 +6,37 @@ import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import { signIn } from "next-auth/react";
-import { useRegisterModal } from '@/app/hooks';
+import { toast } from 'react-hot-toast';
+import { useLoginModal, useRegisterModal } from '@/app/hooks';
 import { Modal } from './'
 import { Button, Heading } from '../';
 import { Input } from '../inputs';
+import { useRouter } from 'next/navigation';
 
 interface Props {}
 
 const RegisterModal:FC = ({}) => {
 
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FieldValues>({
     defaultValues: {
       name:'',
       email: '',
       password: '',
     }
   });
-
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async ({name, email, password}) => {
     setIsLoading(true);
     try {
       const { data } = await axios.post('/api/auth/registry', { name, email, password });
       registerModal.onClose();
-      console.log(data);
+      reset();
+      toast.success(`Welcome to Airbnb ${ data.name }!`);
+      loginModal.onOpen();
     } catch (error) {
       console.log(error);
     } finally {
@@ -49,14 +54,7 @@ const RegisterModal:FC = ({}) => {
         title='Welcome to Airbnb'
         subtitle='Create an account!'
       />
-      <Input
-        id='email'
-        label='Email'
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
+      
       <Input
         id='name'
         label='Name'
@@ -65,6 +63,16 @@ const RegisterModal:FC = ({}) => {
         errors={errors}
         required
       />
+
+      <Input
+        id='email'
+        label='Email'
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+
       <Input
         id='password'
         label='Password'
@@ -84,7 +92,11 @@ const RegisterModal:FC = ({}) => {
         outline 
         label='Continue with Google'
         icon={FcGoogle}
-        onClick={() => signIn('google') } 
+        onClick={(e) =>{
+          e.preventDefault()
+          signIn('google') } 
+        } 
+          
       />
       <Button 
         outline 

@@ -12,7 +12,10 @@ export async function POST (request: Request){
             email,
             hashedPassword
         }
+
     })
+
+    
 
     return NextResponse.json(user);
 }
