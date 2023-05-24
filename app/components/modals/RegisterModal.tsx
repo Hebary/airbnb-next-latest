@@ -1,21 +1,20 @@
 'use client';
 
 import { FC, useCallback, useState } from 'react'
-import axios from 'axios'
+import { signIn } from "next-auth/react";
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
-import { signIn } from "next-auth/react";
+import axios from 'axios'
 import { toast } from 'react-hot-toast';
+
 import { useLoginModal, useRegisterModal } from '@/app/hooks';
 import { Modal } from './'
 import { Button, Heading } from '../';
 import { Input } from '../inputs';
-import { useRouter } from 'next/navigation';
 
-interface Props {}
 
-const RegisterModal:FC = ({}) => {
+const RegisterModal:FC = () => {
 
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
@@ -27,7 +26,6 @@ const RegisterModal:FC = ({}) => {
       password: '',
     }
   });
-  const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async ({name, email, password}) => {
     setIsLoading(true);
@@ -45,8 +43,8 @@ const RegisterModal:FC = ({}) => {
   }
   const onToggle = useCallback(() => {
     registerModal.onClose();
-    // loginModal.onOpen();
-  }, [registerModal])
+    loginModal.onOpen();
+  }, [registerModal, loginModal])
 
   const bodyContent = (
     <div className='flex flex-col gap-4'>

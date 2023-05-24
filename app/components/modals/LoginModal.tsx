@@ -11,13 +11,14 @@ import { toast } from 'react-hot-toast';
 import { Button, Heading } from '..';
 import { Input } from '../inputs';
 import { Modal } from '.'
-import { useLoginModal } from '@/app/hooks';
+import { useLoginModal, useRegisterModal } from '@/app/hooks';
 
 interface Props {}
 
 const LoginModal:FC = ({}) => {
 
   const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -50,8 +51,8 @@ const LoginModal:FC = ({}) => {
 
   const onToggle = useCallback(() => {
     loginModal.onClose();
-    // loginModal.onOpen();
-  }, [loginModal])
+    registerModal.onOpen();
+  }, [loginModal, registerModal])
 
   const bodyContent = (
     <div className='flex flex-col gap-4'>
@@ -103,7 +104,7 @@ const LoginModal:FC = ({}) => {
           font-light
         '
       >
-        <p>You don&apos;t have an account?
+        <p>First time using Airbnb?
           <span 
             onClick={onToggle} 
             className='
@@ -111,7 +112,7 @@ const LoginModal:FC = ({}) => {
               cursor-pointer 
               hover:underline
             '
-            > Sign Up</span>
+            > Create an Account</span>
         </p>
       </div>
     </div>
