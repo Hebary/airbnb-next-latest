@@ -8,6 +8,7 @@ const Logo: React.FC = () => {
 
 
   return <Image
+            onClick={() => router.push('/')}
             alt='logo'
             className='hidden md:block cursor-pointer'
             height={100}

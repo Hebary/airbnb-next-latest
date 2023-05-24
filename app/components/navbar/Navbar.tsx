@@ -2,7 +2,7 @@
 
 import { FC } from 'react'
 import { Container } from '..'
-import { Logo, Search, UserMenu } from '.'
+import { Categories, Logo, Search, UserMenu } from '.'
 import { User } from '@prisma/client';
 
 interface Props {
@@ -22,6 +22,7 @@ const Navbar:FC<Props> = ({ currentUser }) => {
                 </div>
             </Container>
         </div>
+        <Categories/>
     </div>
   )
 }
