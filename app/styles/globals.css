@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+html, 
+body 
+:root {
+    height: 100%;
+}
+
+
+/* this is for modal good behavior */
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+    z-index: 0 !important;
+}

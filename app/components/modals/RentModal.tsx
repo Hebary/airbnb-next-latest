@@ -6,8 +6,9 @@ import { useRentModal } from '@/app/hooks';
 import { Modal } from '.'
 import { Heading } from '..';
 import { categories } from '../navbar/Categories';
-import { CategoryInput, CountrySelector } from '../inputs';
+import { CategoryInput, CountrySelect } from '../inputs';
 import { FieldValues, useForm } from 'react-hook-form';
+import dynamic from 'next/dynamic';
 
 
 enum STEPS  {
@@ -52,10 +53,10 @@ const RentModal : FC = () => {
         return 'Back';
     }, [ step ])
     
-    const {  register,  handleSubmit, setValue, watch, formState: { errors}, reset, } = useForm<FieldValues>({
+    const { register, handleSubmit, setValue, watch, formState: { errors}, reset } = useForm<FieldValues>({
       defaultValues: {
         category: '',
-        location: null,
+        location: undefined,
         guestCount: 1,
         roomCount: 1,
         bathroomCount: 1,
@@ -75,6 +76,10 @@ const RentModal : FC = () => {
   const imageSrc = watch('imageSrc');
   
   
+  const Map = useMemo(() => dynamic(() => import('../Map'), {
+    ssr: false,
+  }), [location])
+
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -107,8 +112,14 @@ const RentModal : FC = () => {
     if(step === STEPS.LOCATION) {
         bodyContent = (
           <div className='flex flex-col gap-8'>
-            <Heading title ='Where is your place located' subtitle={'Help guests find you!'}/>
-            <CountrySelector/>
+            <Heading title ='Where is your place located ?' subtitle={'Help guests find you!'}/>
+            <CountrySelect
+              onChange={(value) => setCustomValue('location', value)}
+              value={ location }
+            />
+            <Map
+              center = { location?.latlng }
+            />
           </div>  
         )
     }
