@@ -11,11 +11,8 @@ interface CategoryBoxProps {
   selected?: boolean;
 }
 
-const CategoryBox: React.FC<CategoryBoxProps> = ({
-  icon: Icon,
-  label,
-  selected,
-}) => {
+const CategoryBox: React.FC<CategoryBoxProps> = ({ icon: Icon, label, selected }) => {
+  
   const router = useRouter();
   const params = useSearchParams();
 

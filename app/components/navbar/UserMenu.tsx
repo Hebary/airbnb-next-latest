@@ -1,12 +1,13 @@
 'use client';
 
 import { FC, useCallback, useState } from 'react'
+import { signOut } from 'next-auth/react';
 import { AiOutlineMenu } from 'react-icons/ai'
+import { User } from '@prisma/client';
+
 import { Avatar } from '..'
 import { MenuItem } from '.'
-import { useLoginModal, useRegisterModal } from '@/app/hooks';
-import { signOut } from 'next-auth/react';
-import { User } from '@prisma/client';
+import { useLoginModal, useRegisterModal, useRentModal } from '@/app/hooks';
 
 interface Props {
     currentUser?: User | null
@@ -16,6 +17,8 @@ const UserMenu:FC<Props> =  ({ currentUser }) => {
 
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
+    const rentModal = useRentModal();
+    
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = useCallback(() => {
@@ -36,8 +39,10 @@ const UserMenu:FC<Props> =  ({ currentUser }) => {
     const onRent = useCallback(() => {
         if(!currentUser) 
             return loginModal.onOpen();
-        console.log('do the rest')
-    }, [currentUser, loginModal]);
+            
+            rentModal.onOpen();
+
+    }, [currentUser, loginModal, rentModal]);
 
      return (
         <div className='relative'>
@@ -78,7 +83,7 @@ const UserMenu:FC<Props> =  ({ currentUser }) => {
                                 />
                                 <MenuItem 
                                     label={'Airbnb my home'} 
-                                    onClick={ onRent }
+                                    onClick={ () => { onRent(); toggleMenu(); } }
                                 />
                                 <hr/>
                                 <MenuItem 
