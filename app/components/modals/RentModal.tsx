@@ -212,7 +212,6 @@ const RentModal : FC = () => {
             errors={errors}
             required
           />
-          <hr />
           <Input
             id='description'
             label='Description'
