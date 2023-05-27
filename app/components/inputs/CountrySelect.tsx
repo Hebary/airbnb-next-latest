@@ -27,7 +27,7 @@ const CountrySelect:FC<Props> = ({ value, onChange }) => {
         isClearable
         options={ getAll() }
         value = { value }
-        onChange = { (value: CountrySelectValue) => onChange(value)}
+        onChange = { (value) => onChange(value as CountrySelectValue)}
         formatOptionLabel = {( option: any) => (
           <div className='flex flex-row items-center gap-3'>
             <div>
