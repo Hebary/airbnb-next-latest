@@ -2,13 +2,14 @@
 
 
 import { FC, useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { FieldValues, useForm } from 'react-hook-form';
+
 import { useRentModal } from '@/app/hooks';
+import { categories } from '../navbar/Categories';
+import { CategoryInput, Counter, CountrySelect } from '../inputs';
 import { Modal } from '.'
 import { Heading } from '..';
-import { categories } from '../navbar/Categories';
-import { CategoryInput, CountrySelect } from '../inputs';
-import { FieldValues, useForm } from 'react-hook-form';
-import dynamic from 'next/dynamic';
 
 
 enum STEPS  {
@@ -114,13 +115,41 @@ const RentModal : FC = () => {
           <div className='flex flex-col gap-8'>
             <Heading title ='Where is your place located ?' subtitle={'Help guests find you!'}/>
             <CountrySelect
-              onChange={(value) => setCustomValue('location', value)}
+              onChange={ (value) => setCustomValue('location', value) }
               value={ location }
             />
             <Map
               center = { location?.latlng }
             />
           </div>  
+        )
+    }
+
+    if(step === STEPS.INFO) {
+        bodyContent = (
+          <div className='flex flex-col gap-8'>
+            <Heading 
+              title ='Share some basics about your place' 
+              subtitle={ 'How is your place ?' }/>
+            <Counter
+              title={ 'Guests' }
+              subtitle={ 'How many guests can you allow?' }
+              onChange={ (value) => setCustomValue('guestCount', value) }
+              value={guestCount}
+            />
+            <Counter
+              title={ 'Rooms' }
+              subtitle={ 'How many rooms do you have?' }
+              onChange={ (value) => setCustomValue('roomCount', value) }
+              value={roomCount}
+            />
+            <Counter
+              title={ 'Bathrooms' }
+              subtitle={ 'How many bathrooms do you have?' }
+              onChange={ (value) => setCustomValue('bathroomCount', value) }
+              value={bathroomCount}
+            />
+          </div>
         )
     }
 

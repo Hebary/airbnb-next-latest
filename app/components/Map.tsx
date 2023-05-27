@@ -23,22 +23,23 @@ interface Props{
     center?: number[]
 }
 
-const attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-const url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+const attribution = "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+const url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 const Map:FC<Props> = ({ center }) => {
 
     console.log({center})
+
     return (
         <MapContainer
-            center = { center as L.LatLngExpression } 
+            center = { center as L.LatLngExpression || [11,53] } 
             zoom={ center ? 4 : 2 }
             scrollWheelZoom={ false }
             className='h-[35vh] rounded-lg'
         > 
             <TileLayer
-                attribution={attribution}
-                url= {url}
+                attribution={ attribution }
+                url= { url }
             />
             {center && (
                 <Marker 
