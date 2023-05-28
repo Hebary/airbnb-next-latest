@@ -76,14 +76,14 @@ const Modal: FC<Props> = ({ isOpen, onClose, onSubmit, title, body, footer, acti
                             {/* FOOTER */}
                             <div className='flex flex-col p-6 gap-2 '>
                                 <div className='flex flex-row items-center gap-4 w-full'>
-                                    { secondaryAction && secondaryActionLabel &&
-                                        <Button 
-                                            label={ secondaryActionLabel }
-                                            disabled={ disabled }
-                                            onClick={ handleSubmit }
-                                            outline	
-                                        />
-                                    }
+                                {secondaryAction && secondaryActionLabel && (
+                                    <Button 
+                                        disabled={disabled} 
+                                        label={secondaryActionLabel} 
+                                        onClick={handleSecondaryAction}
+                                        outline
+                                        />  
+                                    )}
                                     <Button 
                                         label={ actionLabel }
                                         disabled={ disabled }
