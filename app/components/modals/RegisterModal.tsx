@@ -90,17 +90,8 @@ const RegisterModal:FC = () => {
         outline 
         label='Continue with Google'
         icon={FcGoogle}
-        onClick={(e) =>{
-          e.preventDefault()
-          signIn('google') } 
-        } 
+        onClick={ () => signIn('google') } 
           
-      />
-      <Button 
-        outline 
-        label='Continue with Github'
-        icon={AiFillGithub}
-        onClick={() => signIn('github')}
       />
       <div 
         className='

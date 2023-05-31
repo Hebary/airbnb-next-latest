@@ -15,9 +15,11 @@ export const metadata:Metadata = {
 }
 
 export default async function RootLayout({ children }: {children: React.ReactNode }) {
+  
   const user = await getCurrentUser();
+  
   return (
-    <html lang="en">
+    <html lang='en'>
       <body className={nunito.className}>
         <Provider>
             <ToasterProvider/>
@@ -25,7 +27,9 @@ export default async function RootLayout({ children }: {children: React.ReactNod
             <RentModal/>
             <LoginModal/>
             <Navbar currentUser={user}/>
-          {children}
+            <div className='py-28'>
+              { children }
+            </div>
         </Provider>
       </body>
     </html>
