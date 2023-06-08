@@ -41,7 +41,6 @@ const useFavorite = ({ listingId, currentUser }: Props) => {
 
         } catch (error: any) {
             toast.error(error?.message);
-            console.log(error?.message);
         }
     },[currentUser, hasFavorited, listingId, loginModal, router])
 

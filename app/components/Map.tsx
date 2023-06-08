@@ -28,8 +28,6 @@ const url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 const Map:FC<Props> = ({ center }) => {
 
-    console.log({center})
-
     return (
         <MapContainer
             center = { center as L.LatLngExpression || [11,53] } 
