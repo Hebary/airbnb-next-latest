@@ -4,13 +4,13 @@ import { FC, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import { Listing, Reservation, User } from '@prisma/client';
-import { FormatInputPathObject, format } from 'path';
+import {  format } from 'date-fns';
 
 import { useCountries } from '@/app/hooks';
 import { Button, HeartButton } from '@/app/components';
 
 
-interface Props{
+interface Props {
     listing      : Listing
     currentUser ?: User
     reservation ?: Reservation
@@ -20,7 +20,7 @@ interface Props{
     actionId    ?: string
 }
 
-const ListingCard:FC<Props> = ({ listing, currentUser, reservation, onAction, disabled, actionLabel, actionId }) => {
+const ListingCard: FC<Props> = ({ listing, currentUser, reservation, onAction, disabled, actionLabel, actionId }) => {
 
     const router = useRouter();
     const {  getByValue } = useCountries();
@@ -41,12 +41,12 @@ const ListingCard:FC<Props> = ({ listing, currentUser, reservation, onAction, di
 
     }, [ reservation, listing.price ])
     
+
     const reservationDate = useMemo(() => {
         if(!reservation) return;
-
         const startDate = new Date(reservation.startDate);
         const endDate = new Date(reservation.endDate);
-        return `${ format(startDate as FormatInputPathObject)} - ${format(endDate as FormatInputPathObject) }`
+        return `${format(startDate, 'PP')} - ${format(endDate, 'PP')}`;
     },[reservation])
 
     return (

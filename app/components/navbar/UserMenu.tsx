@@ -1,6 +1,7 @@
 'use client';
 
 import { FC, useCallback, useState } from 'react'
+import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { AiOutlineMenu } from 'react-icons/ai'
 import { User } from '@prisma/client';
@@ -18,7 +19,7 @@ const UserMenu:FC<Props> =  ({ currentUser }) => {
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
     const rentModal = useRentModal();
-    
+    const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = useCallback(() => {
@@ -66,7 +67,7 @@ const UserMenu:FC<Props> =  ({ currentUser }) => {
                             <>
                                 <MenuItem 
                                     label={'My trips'} 
-                                    onClick={ ()=>{} }
+                                    onClick={ ()=> router.push('/trips') }
                                 />
                                 <MenuItem 
                                     label={'My favorites'} 

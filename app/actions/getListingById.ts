@@ -17,10 +17,9 @@ export default async function getListingById( params: IParams) {
                 user: true,
             }
         });
+        
+        return listing || null;
 
-        if(!listing) return null;
-
-        return listing;
     } catch (error) {
         throw new Error(error as string);
     }
