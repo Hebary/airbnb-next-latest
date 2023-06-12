@@ -67,20 +67,20 @@ const UserMenu:FC<Props> =  ({ currentUser }) => {
                             <>
                                 <MenuItem 
                                     label={'My trips'} 
-                                    onClick={ ()=> {router.push('/trips'); toggleMenu() } }
+                                    onClick={ ()=> { router.push('/trips'); toggleMenu(); } }
                                 />
                                 <MenuItem 
                                     label={'My favorites'} 
-                                    onClick={ ()=>{} }
+                                    onClick={ ()=>{ router.push('/favorites'); toggleMenu(); } }
                                 />
                                 <MenuItem 
                                     label={'My reservations'} 
-                                    onClick={ ()=> {router.push('/reservations'); toggleMenu(); }}
+                                    onClick={ ()=> { router.push('/reservations'); toggleMenu(); }}
                                 />
 
                                 <MenuItem 
                                     label={'My propereties'} 
-                                    onClick={ ()=>{} }
+                                    onClick={ ()=>{ router.push('/properties'); toggleMenu(); } }
                                 />
                                 <MenuItem 
                                     label={'Airbnb my home'} 
