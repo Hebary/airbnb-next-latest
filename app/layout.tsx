@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import './styles/globals.css'
 import { Nunito } from 'next/font/google'
 import { Navbar } from './components/navbar'
-import { RegisterModal, LoginModal, RentModal } from './components/modals'
+import { RegisterModal, LoginModal, RentModal, SearchModal } from './components/modals'
 import { ToasterProvider } from './components'
 import { Provider } from './components'
 import { getCurrentUser } from './actions'
@@ -26,6 +26,7 @@ export default async function RootLayout({ children }: {children: React.ReactNod
             <RegisterModal/>
             <RentModal/>
             <LoginModal/>
+            <SearchModal/>
             <Navbar currentUser={user}/>
             <div className='py-28'>
               { children }

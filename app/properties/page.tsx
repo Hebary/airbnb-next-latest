@@ -11,7 +11,7 @@ const PropertiesPage = async () => {
 
   if (!currentUser) {
     return <EmptyState
-      title='Unauthorized'
+      title='Un authorized'
       subtitle='Please login'
     />
   }
