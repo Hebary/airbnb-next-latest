@@ -102,12 +102,16 @@ const SearchModal:FC<Props> = ({}) => {
     ]);
     
     const actionLabel = useMemo(()=>{
-        if(step === STEPS.INFO) return 'Search';
+        if(step === STEPS.INFO) {
+            return 'Search';
+        } else return 'Next';
     },[STEPS.INFO, step]);
     
     const secondaryActionLabel = useMemo(()=>{
-        if(step === STEPS.LOCATION) return undefined;
-        return 'Back';
+        if(step === STEPS.LOCATION) {
+            return undefined;
+        } else return 'Back';
+        
     },[STEPS.LOCATION, step]);
     
     let bodyContent = (
@@ -176,7 +180,7 @@ const SearchModal:FC<Props> = ({}) => {
             onClose={ searchModal.onClose }
             onSubmit={ onSubmit }
             title='Filters'
-            actionLabel={ actionLabel as string}
+            actionLabel={ actionLabel }
             secondaryActionLabel={ secondaryActionLabel }
             secondaryAction={step === STEPS.LOCATION ? undefined : onBack}
             body = { bodyContent }
