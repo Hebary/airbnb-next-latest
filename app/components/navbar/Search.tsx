@@ -1,26 +1,64 @@
 'use client';
 
 import { BiSearch } from 'react-icons/bi'
-import { useSearchModal } from '@/app/hooks';
+import { useCountries, useSearchModal } from '@/app/hooks';
+import { useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
+import { differenceInCalendarDays } from 'date-fns';
 
 const Search = () => {
 
     const searchModal = useSearchModal();
+    const params = useSearchParams();
+    const { getByValue } = useCountries();
+    const locationValue = params?.get('location');
+    const startDate = params?.get('startDate');
+    const endDate = params?.get('endDate');
+    const guestCount = params?.get('guestCount');
+
+    const locationLabel = useMemo(() => {
+        if(locationValue){
+            return getByValue(locationValue )?.label;
+        }
+        return 'Anywhere';
+    },[getByValue, locationValue]);
+
+    const durationLabel = useMemo(() => {
+        if(startDate && endDate){
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            let diff = differenceInCalendarDays(end, start);
+            if(diff===0){
+                diff=1;
+            }
+
+            return `${diff} night${diff>1?'s':''}`;
+        }
+        return 'Any week';
+    },[startDate, endDate]);
+
+    const guestLabel = useMemo(() => {
+        if(guestCount){
+            return `${guestCount} Guests`;
+        }
+        return 'Add guests';
+    },[guestCount]);
+
 
     return (
         <div 
             className='border-[1] w-full md:w-auto py-2 rouned-full shadow-sm hover:shadow-md transition cursor-pointer'
             onClick={ searchModal.onOpen }>
-            <div className="flex flex-row items-center justify-between ">
+            <div className='flex flex-row items-center justify-between '>
                 <div className='text-sm font-semibold px-6'>
-                    any where   
+                    { locationLabel }   
                 </div>
                 <div className='hidden sm:flex text-sm font-semibold px-6 border-x-[1px] flex-1 text-center'>
-                    ant week
+                    { durationLabel }
                 </div>
                 <div className='text-sm pl-6 pr-2 text-gray-600 flex flex-row items-center gap-3'>
                     <div className='hidden sm:block'>
-                        Add guests
+                        { guestLabel }
                     </div>
                     <div className='p-2 bg-rose-500 rounded-full text-white'>
                         <BiSearch size={18} />

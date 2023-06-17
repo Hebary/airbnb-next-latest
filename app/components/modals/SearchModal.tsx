@@ -104,13 +104,17 @@ const SearchModal:FC<Props> = ({}) => {
     const actionLabel = useMemo(()=>{
         if(step === STEPS.INFO) {
             return 'Search';
-        } else return 'Next';
+        } 
+        
+        return 'Next';
     },[STEPS.INFO, step]);
     
     const secondaryActionLabel = useMemo(()=>{
         if(step === STEPS.LOCATION) {
             return undefined;
-        } else return 'Back';
+        }
+        
+        return 'Back';
         
     },[STEPS.LOCATION, step]);
     
