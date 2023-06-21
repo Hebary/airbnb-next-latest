@@ -6,8 +6,8 @@ import { signOut } from 'next-auth/react';
 import { AiOutlineMenu } from 'react-icons/ai'
 import { User } from '@prisma/client';
 
-import { Avatar } from '..'
 import { MenuItem } from '.'
+import { Avatar } from '..'
 import { useLoginModal, useRegisterModal, useRentModal } from '@/app/hooks';
 
 interface Props {
@@ -50,10 +50,9 @@ const UserMenu:FC<Props> =  ({ currentUser }) => {
             <div className='flex flex-row items-center gap-3'>
                 <div className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer' 
                     onClick={ onRent }>
-                        Airbnb your home
+                        Airbnb Your Home
                 </div>
-                <div className='p-4 md:py-1 md:px-2 border-[1px] hover:bg-neutral-100 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-sm transition' 
-                    onClick={ toggleMenu }>
+                <div className='p-4 md:py-1 md:px-2 border-[1px] hover:bg-neutral-100 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-sm transition' onClick={ toggleMenu }>
                         <AiOutlineMenu/>
                         <div className='hidden md:block'>
                             <Avatar src={ currentUser?.image }/>
@@ -63,32 +62,33 @@ const UserMenu:FC<Props> =  ({ currentUser }) => {
         { isOpen && (
             <div className='absolute rounded-xl shadow-md w-[40vh] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm'>
                 <div className='flex flex-col cursor-pointer'>
-                    {   currentUser ? (
+                    {   
+                        currentUser ? (
                             <>
                                 <MenuItem 
-                                    label={'My trips'} 
+                                    label={'My Trips'} 
                                     onClick={ ()=> { router.push('/trips'); toggleMenu(); } }
                                 />
                                 <MenuItem 
-                                    label={'My favorites'} 
+                                    label={'My Favorites'} 
                                     onClick={ ()=>{ router.push('/favorites'); toggleMenu(); } }
                                 />
                                 <MenuItem 
-                                    label={'My reservations'} 
+                                    label={'My Reservations'} 
                                     onClick={ ()=> { router.push('/reservations'); toggleMenu(); }}
                                 />
 
                                 <MenuItem 
-                                    label={'My propereties'} 
+                                    label={'My Propereties'} 
                                     onClick={ ()=>{ router.push('/properties'); toggleMenu(); } }
                                 />
                                 <MenuItem 
-                                    label={'Airbnb my home'} 
+                                    label={'Airbnb My Home'} 
                                     onClick={ () => { onRent(); toggleMenu(); } }
                                 />
                                 <hr/>
                                 <MenuItem 
-                                    label={'Sign out'} 
+                                    label={'Sign Out'} 
                                     onClick={ ()=>signOut() }
                                 />
                             </>
